@@ -16,6 +16,7 @@ export class PlayComponent {
   public walletAddress: string;
   public shortenedWalletAddress: string;
   public nfts: any = [];
+  selectedShip: any = null;
   gameInProgress: boolean = false;
 
   constructor(
@@ -29,6 +30,11 @@ export class PlayComponent {
 
   startGame() {
     this.gameInProgress = true;
+  }
+
+  selected(ship) {
+    this.selectedShip = ship;
+    console.log(this.selectedShip);
   }
 
   async logOut() {

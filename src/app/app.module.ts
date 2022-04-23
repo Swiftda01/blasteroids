@@ -15,6 +15,7 @@ import { PlayComponent } from './components/play/play.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { GameComponent } from './components/game/game.component';
 import { ShipComponent } from './components/ship/ship.component';
+import { ShipsComponent } from './components/ships/ships.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ShipComponent } from './components/ship/ship.component';
     PlayComponent,
     LandingComponent,
     GameComponent,
-    ShipComponent
+    ShipComponent,
+    ShipsComponent
   ],
   imports: [
     BrowserModule,

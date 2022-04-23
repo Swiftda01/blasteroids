@@ -1,0 +1,14 @@
+{
+	"name": "Dragon",
+	"description": "A versatile cruiser",
+	"size": 30,
+	"thrust": 5,
+	"turnSpeed": 360,
+	"laserDist": 0.4,
+	"laserMax": 10,
+	"laserSpeed": 500,
+	"hits": 3,
+	"thrustInnerColor": "orange",
+  "thrustOuterColor": "red",
+	"laserColor": "orange"
+}

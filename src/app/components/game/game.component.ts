@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'game',
@@ -7,33 +7,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameComponent implements OnInit {
 
+  @Input()
+  selectedShip: any;
+
   constructor() { }
 
   ngOnInit(): void {
+    const selectedShipAttrs = this.selectedShip.metadata;
     const FPS = 30; // frames per second
     const friction = 0.5; // friction coefficient of space
     const shipBlinkDuration = 0.1; // in seconds
     const shipExplodeDuration = 0.3;
     const shipInvisibilityDuration = 3; // in seconds
-    const shipSize = 30; // height in pixels
-    const shipThrust = 5; // acceleration of the ship px per sec
-    const shipTurnSpeed = 360; // degrees per second
-    const laserDist = 0.4; // max distance laser can travel
-    const laserExplodeDuration = 0.1;
-    const laserMax = 10; // max num of lasers on screen at once
-    const laserSpeed = 500; // px per sec
+    const shipSize = selectedShipAttrs.size; // height in pixels
+    const shipThrust = selectedShipAttrs.thrust; // acceleration of the ship px per sec
+    const shipTurnSpeed = selectedShipAttrs.turnSpeed; // degrees per second
+    const laserDist = selectedShipAttrs.laserDist; // max distance laser can travel
+    const laserExplodeDuration = selectedShipAttrs.laserExplodeDuration;
+    const laserMax = selectedShipAttrs.laserMax; // max num of lasers on screen at once
+    const laserSpeed = selectedShipAttrs.laserSpeed; // px per sec
     const roidsJag = 0.3; //jaggedness of the asteroids
     const roidsNum = 1; // starting nb of asteroids
     const roidsSize = 100; // starting size of asteroids in px
     const roidsSpeed = 50; // max px per second
     const roidsVert = 10; // average nb of vertices on each asteroid
-    const gameLives = 3; //starting num of lives
+    const gameLives = selectedShipAttrs.hits; //starting num of lives
     const textFadeTime = 3; // in seconds
     const textSize = 40; // in px
     const roidsLargePts = 20; // points scored for large asteroid
     const roidsMediumPts = 50; // points scored for medium asteroid
     const roidsSmallPts = 100; // points scored for small asteroid
     const saveScore = "highScore"; // save key for local storage
+
     let soundOn = true;
     let musicOn = false;
 
@@ -99,21 +104,18 @@ export class GameComponent implements OnInit {
       }
     }
 
-
     // SET UP THE GAME LOOP
     setInterval(update, 1000 / FPS);
 
-
     // SET UP GAME PARAMETERS
     let level, roids, ship, lives, score, highScore, text, textAlpha;
-
 
     // START THE GAME
     // Background
     context.fillStyle = "rgba(44,44,44,1.00)";
     context.fillRect(0, 0, canvas.width, canvas.height);
     // Title
-    context.fillStyle = "rgba(193,193,193,1.00)";
+    context.fillStyle = "#FFFFFF";
     context.font = "normal small-caps 100 " + (textSize + 30) + "px VT323";
     context.textAlign   = "center";
     context.textBaseline = "middle";
@@ -122,8 +124,6 @@ export class GameComponent implements OnInit {
     context.font = "small-caps " + (textSize - 15) + "px VT323";
     context.fillText("PRESS ANY KEY TO START", canvas.width / 2, canvas.height * 0.58);
     document.addEventListener("keydown", newGame);
-
-
 
     // BUILD AN ASTEROID
     function newAsteroid (x, y, r) {
@@ -161,7 +161,6 @@ export class GameComponent implements OnInit {
         roids.push(newAsteroid(x, y, Math.ceil(roidsSize / 2)));
       }
     }
-
 
     // DESTROY AN ASTEROID
     function destroyAsteroid (index) {
@@ -203,12 +202,10 @@ export class GameComponent implements OnInit {
       }
     }
 
-
     // GET THE DISTANCE BETWEEN TWO POINTS
     function distBetweenPoints(x1, y1, x2, y2) {
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
-
 
     // BUILD A NEW SHIP
     function newShip () {
@@ -232,9 +229,8 @@ export class GameComponent implements OnInit {
       }
     }
 
-
     // DRAW A NEW SHIP
-    function drawShip(x, y, a, color = "#fff") {
+    function drawShip(x, y, a, color = "#FFFFFF") {
       context.strokeStyle = color;
       context.lineWidth = shipSize / 20;
       context.beginPath();
@@ -254,7 +250,6 @@ export class GameComponent implements OnInit {
       context.stroke();
     }
 
-
     // SHOOT LASERS
     function shootLaser () {
       // Create a laser
@@ -273,13 +268,11 @@ export class GameComponent implements OnInit {
       ship.canShoot = false;
     }
 
-
     // MAKE THE SHIP EXPLODE
     function explodeShip () {
       ship.explodeTime = Math.ceil(shipExplodeDuration * FPS);
       explosionSound.play();
     }
-
 
     // DRAW THE EXPLOSITION
     function drawExplosion (ex, ey, spikes, r) {
@@ -335,7 +328,6 @@ export class GameComponent implements OnInit {
       context.fill();
     }
 
-
     // MAKE THE GAME WORK
     function update () {
       if (!ship) return;
@@ -381,18 +373,17 @@ export class GameComponent implements OnInit {
         context.closePath();
         context.stroke();
       }
-      
-      
+
       // THRUST THE SHIP
       if (ship.thrusting && !ship.dead) {
         ship.thrust.x += shipThrust * Math.cos(ship.a) / FPS;
         ship.thrust.y -= shipThrust * Math.sin(ship.a) / FPS;
         thrustSound.play();
-        
+
         // Draw the thruster
         if (!exploding && blinkOn) {
-          context.fillStyle= "rgba(255,86,0,1.00)";
-          context.strokeStyle = "rgba(255,169,78,1.00)"; 
+          context.fillStyle = selectedShipAttrs.thrustInnerColor;
+          context.strokeStyle = selectedShipAttrs.thrustOuterColor;
           context.lineWidth = shipSize / 10;
           context.beginPath();
           context.moveTo(
@@ -420,7 +411,7 @@ export class GameComponent implements OnInit {
         ship.thrust.y -= friction * ship.thrust.y / FPS;
         thrustSound.stop()
       }
-      
+
       // DRAW THE SHIP
       if (!exploding) {
         if (blinkOn && !ship.dead) {
@@ -440,12 +431,11 @@ export class GameComponent implements OnInit {
         // Draw the explosion
         drawExplosion(ship.x, ship.y, 20, ship.r);
       }
-      
-      
+
       // DRAW THE LASERS
       for (let i = 0; i < ship.lasers.length; i++) {
         if (ship.lasers[i].explodeTime == 0) {
-          context.fillStyle = "rgba(251,143,129,1.00)";
+          context.fillStyle = selectedShipAttrs.laserColor;
           context.beginPath();
           context.arc(ship.lasers[i].x, ship.lasers[i].y, shipSize / 15, 0, Math.PI * 2, false);
           context.fill();
@@ -454,7 +444,6 @@ export class GameComponent implements OnInit {
           drawExplosion(ship.lasers[i].x, ship.lasers[i].y, 20, shipSize * 0.75);
         }
       }
-      
       
       // DRAW THE GAME TEXT
       if (textAlpha >= 0) {
@@ -472,32 +461,28 @@ export class GameComponent implements OnInit {
         document.addEventListener("keydown", newGame);
         
       }
-      
-      
+
       // DRAW THE LIVES 
       let lifeColors;
       for (let i = 0; i < lives; i++) {
         lifeColors = exploding && i === lives - 1 ? "red" : "#fff";
         drawShip((shipSize + i * shipSize * 1.2), shipSize, 0.5 * Math.PI, lifeColors);
       }
-      
-      
+
       // DRAW THE SCORE
       context.fillStyle = "#C9C9C9";
       context.font = (textSize + 5) + "px VT323";
       context.textAlign = "right";
       context.textBaseline = "middle";
       context.fillText(score, canvas.width - shipSize / 2, shipSize);
-      
-      
+
       // DRAW THE HIGH SCORE
       context.fillStyle = "#C9C9C9";
       context.font = (textSize * 0.9) + "px VT323";
       context.textAlign = "center";
       context.textBaseline = "middle";
       context.fillText("BEST SCORE: " + highScore, canvas.width / 2, shipSize);
-      
-      
+
       //DETECT LASER HITS ON ASTEROID
       let ax, ay, ar, lx, ly;
       for (let i = roids.length - 1; i >= 0; i--) {
@@ -521,8 +506,7 @@ export class GameComponent implements OnInit {
           }
         }
       }
-      
-      
+
       //CHECK FOR ASTEROID COLLISIONS
       if (!exploding) {
         if (ship.blinkNumber === 0 && !ship.dead) {
@@ -535,13 +519,12 @@ export class GameComponent implements OnInit {
           }
         }
 
-          // ROTATE THE SHIP
-          ship.a += ship.rotation; 
+        // ROTATE THE SHIP
+        ship.a += ship.rotation;
 
-          // MOVE THE SHIP
-          ship.x += ship.thrust.x;
-          ship.y += ship.thrust.y;
-        
+        // MOVE THE SHIP
+        ship.x += ship.thrust.x;
+        ship.y += ship.thrust.y;
       } else {
         ship.explodeTime --;
         // Reset the ship after an explosion
@@ -566,7 +549,6 @@ export class GameComponent implements OnInit {
       } else if (ship.y > canvas.height + ship.r) {
         ship.y = 0 - ship.r;
       } 
-      
       
       // MOVE THE LASERS
       for (let i = ship.lasers.length - 1; i >= 0; i--) {
@@ -594,9 +576,7 @@ export class GameComponent implements OnInit {
         // Calculate the distance travelled
         ship.lasers[i].dist += Math.sqrt(Math.pow(ship.lasers[i].xv, 2) + Math.pow(ship.lasers[i].yv, 2));
         }
-        
-        
-        
+
         // Handle edge of screen
         if (ship.lasers[i].x < 0) {
           ship.lasers[i].x = canvas.width;
@@ -609,8 +589,7 @@ export class GameComponent implements OnInit {
           ship.lasers[i].y = 0;
         }
       }
-      
-      
+
       //MOVE THE ASTEROIDS
       for  (let i = 0; i < roids.length; i++) {
         roids[i].x += roids[i].xv;
@@ -629,7 +608,6 @@ export class GameComponent implements OnInit {
         }
       }
     }
-
 
     // START A NEW GAME
     function newGame () {
@@ -651,14 +629,12 @@ export class GameComponent implements OnInit {
       newLevel();
     }
 
-
     // NEW LEVEL
     function newLevel () {
       text = "Level " + (level + 1);
       textAlpha = 1.0;
       createAsteroidBelt();
     }
-
 
     // GAME OVER
     function gameOver () {
@@ -667,7 +643,6 @@ export class GameComponent implements OnInit {
       textAlpha = 1.0;
       musicOn = false;
     }
-
 
     // MOVE THE SHIP AND SHOOT THE LASERS ON KEYDOWN
     function keyDown (e) {
@@ -694,7 +669,6 @@ export class GameComponent implements OnInit {
       }
     }
 
-
     // STOP THE ACTIONS ON KEYUP
     function keyUp (e) {
 
@@ -718,7 +692,6 @@ export class GameComponent implements OnInit {
       }
     }
 
-
     // SWITCH ON/OFF THE SOUND EFFECTS
     // function soundToggle () {
     //   if(soundOn === false) {
@@ -729,7 +702,6 @@ export class GameComponent implements OnInit {
     //     document.querySelector("#sound").innerHTML = '<i class="fas fa-volume-mute" aria-hidden="true" aria-label="sound off"></i>'
     //   }
     // }
-
 
     // SWITCH ON/OFF THE MUSIC
     // function musicToggle () {

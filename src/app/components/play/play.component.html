@@ -11,12 +11,15 @@
   </mat-toolbar>
   
   <div id="main">
-    <div id="ship-selection" *ngIf="!gameInProgress">
+    <div id="ship-selection" *ngIf="!selectedShip">
       <ships
         [ships]="nfts"
         (shipSelected)="selected($event)"
       ></ships>
     </div>
-    <game *ngIf="gameInProgress"></game>
+    <game
+      *ngIf="selectedShip"
+      [selectedShip]="selectedShip"
+    ></game>
   </div>
 </div>

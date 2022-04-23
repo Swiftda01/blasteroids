@@ -17,7 +17,6 @@ export class PlayComponent {
   public shortenedWalletAddress: string;
   public nfts: any = [];
   selectedShip: any = null;
-  gameInProgress: boolean = false;
 
   constructor(
     private moralisService: MoralisService,
@@ -28,13 +27,8 @@ export class PlayComponent {
     this._initializeComponent();
   }
 
-  startGame() {
-    this.gameInProgress = true;
-  }
-
   selected(ship) {
     this.selectedShip = ship;
-    console.log(this.selectedShip);
   }
 
   async logOut() {

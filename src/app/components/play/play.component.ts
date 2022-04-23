@@ -67,7 +67,7 @@ export class PlayComponent {
     await this.moralisService.getNftsOwned().then(nfts => {
       console.log('nfts: ', nfts);
       this.nfts = nfts;
-    })
+    });
   }
 
   private _goToLandingPage() {

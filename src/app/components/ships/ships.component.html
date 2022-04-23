@@ -1,0 +1,13 @@
+<div id="ships">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm" *ngFor="let ship of ships">
+				<ship
+					[metadata]="ship.metadata"
+					(shipSelected)="select($event)"
+				></ship>
+			</div>
+		</div>
+	</div>
+</div>
+

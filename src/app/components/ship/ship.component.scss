@@ -6,10 +6,6 @@
 		font-weight: bold;
 	}
 
-	img {
-		margin-top: 15px;
-	}
-
 	mat-card-footer {
 		padding: 5px;
 	}
@@ -29,7 +25,7 @@
 	}
 
 	mat-card:hover {
-		outline: 3px solid teal;
+		outline: 2px solid blue;
 		cursor: pointer;
 	}
 }

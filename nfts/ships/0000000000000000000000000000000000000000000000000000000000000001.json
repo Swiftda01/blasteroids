@@ -1,0 +1,14 @@
+{
+	"name": "Goliath",
+	"description": "A heavy duty bomber",
+	"size": 50,
+	"thrust": 2,
+	"turnSpeed": 180,
+	"laserDist": 0.8,
+	"laserMax": 12,
+	"laserSpeed": 400,
+	"hits": 5,
+	"thrustInnerColor": "green",
+  "thrustOuterColor": "blue",
+	"laserColor": "green"
+}

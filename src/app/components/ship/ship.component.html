@@ -1,11 +1,13 @@
 <div class="ship">
 	<mat-card (click)="select()">
 		<mat-card-title>{{ metadata.name }}</mat-card-title>
+		<hr />
 		<mat-card-subtitle>{{ metadata.description }}</mat-card-subtitle>
+		<hr />
 		<mat-card-content>
-			<p>Ship size: {{ metadata.size }}</p>
-			<p>Speed: {{ metadata.thrust }}</p>
-			<p>Range: {{ metadata.laserDist }}</p>
+			<p>Ship size: {{ metadata.size }} m³</p>
+			<p>Speed: Mach {{ metadata.thrust }}</p>
+			<p>Cannon Range: {{ metadata.laserDist }} km</p>
 			<p>Squadron size: {{ metadata.hits }}</p>
 		</mat-card-content>
 	</mat-card>

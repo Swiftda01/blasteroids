@@ -13,13 +13,15 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatDividerModule } from '@angular/material/divider';
 import { PlayComponent } from './components/play/play.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { GameComponent } from './components/game/game.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayComponent,
-    LandingComponent
+    LandingComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,

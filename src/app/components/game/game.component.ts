@@ -109,16 +109,16 @@ export class GameComponent implements OnInit {
 
 
     // START THE GAME
-      // Background
+    // Background
     context.fillStyle = "rgba(44,44,44,1.00)";
     context.fillRect(0, 0, canvas.width, canvas.height);
-      // Title
+    // Title
     context.fillStyle = "rgba(193,193,193,1.00)";
     context.font = "normal small-caps 100 " + (textSize + 30) + "px VT323";
     context.textAlign   = "center";
     context.textBaseline = "middle";
-    context.fillText("ASTEROIDS", canvas.width / 2, canvas.height * 0.48);
-      // subtitke
+    context.fillText("BLASTEROIDS", canvas.width / 2, canvas.height * 0.48);
+    // Subtitle
     context.font = "small-caps " + (textSize - 15) + "px VT323";
     context.fillText("PRESS ANY KEY TO START", canvas.width / 2, canvas.height * 0.58);
     document.addEventListener("keydown", newGame);

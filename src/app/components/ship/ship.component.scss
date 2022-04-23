@@ -1,0 +1,29 @@
+.ship {
+	margin: 20px;
+	width: 250px;
+
+	mat-card-title {
+		font-weight: bold;
+	}
+
+	img {
+		margin-top: 15px;
+	}
+
+	mat-card-footer {
+		padding: 5px;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	mat-card.unselected:hover {
+		outline: 3px solid blue;
+		cursor: pointer;
+	}
+
+	mat-card.selected {
+		outline: 3px solid blue;
+	}
+}

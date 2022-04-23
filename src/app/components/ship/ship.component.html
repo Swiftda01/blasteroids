@@ -1,0 +1,7 @@
+<div class="ship">
+	<mat-card [class]="isSelectedClass" (click)="toggleSelected()">
+		<mat-card-title>{{ metadata.name }}</mat-card-title>
+		<img mat-card-image src="{{ metadata.image }}">
+		<mat-card-subtitle>{{ metadata.description }}</mat-card-subtitle>
+	</mat-card>
+</div>

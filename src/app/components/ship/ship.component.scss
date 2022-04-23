@@ -18,12 +18,18 @@
 		cursor: pointer;
 	}
 
-	mat-card.unselected:hover {
-		outline: 3px solid blue;
-		cursor: pointer;
+	mat-card {
+		background-color: #000000;
+		color: #FFFFFF;
+		border: 1px solid #FFFFFF;
 	}
 
-	mat-card.selected {
-		outline: 3px solid blue;
+	mat-card-subtitle {
+		color: #FFFFFF;
+	}
+
+	mat-card:hover {
+		outline: 3px solid teal;
+		cursor: pointer;
 	}
 }

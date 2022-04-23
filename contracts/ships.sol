@@ -6,7 +6,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 
 contract NFTContract is ERC1155, Ownable {
     
-	constructor() ERC1155("https://e61xv5nlo0vj.usemoralis.com/gadgets/{id}.json") { }
+	constructor() ERC1155("https://e61xv5nlo0vj.usemoralis.com/ships/{id}.json") { }
 	
 	function mint(address account, uint256 id, uint256 amount) public onlyOwner {
 		_mint(account, id, amount, "");

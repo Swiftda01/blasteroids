@@ -338,6 +338,8 @@ export class GameComponent implements OnInit {
 
     // MAKE THE GAME WORK
     function update () {
+      if (!ship) return;
+
       let blinkOn = ship.blinkNumber % 2 === 0;
       let exploding = ship.explodeTime > 0;
       
